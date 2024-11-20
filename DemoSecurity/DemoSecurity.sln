@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35506.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoSecurity.API", "DemoSecurity.API\DemoSecurity.API.csproj", "{4CC5259C-8A33-40CD-BA6B-3B54CC7D59FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoSecurity.Models", "DemoSecurity.Models\DemoSecurity.Models.csproj", "{A3CB0D56-DD95-47FD-A439-CC47B5B8F69A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4CC5259C-8A33-40CD-BA6B-3B54CC7D59FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CC5259C-8A33-40CD-BA6B-3B54CC7D59FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CC5259C-8A33-40CD-BA6B-3B54CC7D59FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CC5259C-8A33-40CD-BA6B-3B54CC7D59FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3CB0D56-DD95-47FD-A439-CC47B5B8F69A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3CB0D56-DD95-47FD-A439-CC47B5B8F69A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3CB0D56-DD95-47FD-A439-CC47B5B8F69A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3CB0D56-DD95-47FD-A439-CC47B5B8F69A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
