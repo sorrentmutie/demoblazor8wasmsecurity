@@ -33,18 +33,19 @@ builder.Services.AddIdentityCore<IdentityUser>(o => o.SignIn.RequireConfirmedAcc
 builder.Services.AddAuthentication();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(o =>
+    .AddJwtBearer(options =>
     {
-        o.TokenValidationParameters = new TokenValidationParameters
+        options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidateAudience = true,
-            ValidAudience = builder.Configuration["Jwt:Audience"],
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]!))
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"] ?? "")),
+            ClockSkew = TimeSpan.Zero
         };
     })
     .AddCookie("Identity.Application", options =>
