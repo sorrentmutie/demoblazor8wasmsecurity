@@ -79,36 +79,43 @@ namespace DemoSecurity.API.Controllers
 
         [NonAction]
         [ApiExplorerSettings(IgnoreApi = true)]
-        private async Task<string?> GenerateJwt(IdentityUser user) {
-
-
+        private async Task<string?> GenerateJwt(IdentityUser user)
+        {
+            var symmetricSecurityKey = new SymmetricSecurityKey
+                            (Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"] ?? ""));
+            var userClaims = await userManager.GetClaimsAsync(user);
             var roles = await userManager.GetRolesAsync(user);
-            var claimsDb = await userManager.GetClaimsAsync(user);
 
+            var credentials = new SigningCredentials(
+                symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
 
-            var claims = new List<Claim>
+            var claims = new List<Claim>();
+
+            if (roles != null)
+            {
+                foreach (var role in roles)
                 {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id),
-                    new Claim(ClaimTypes.Email, user.Email!)
-                };
-            claims = claims.Union(roles.Select(role => new Claim(ClaimTypes.Role, role))).ToList();
-            claims = claims.Union(claimsDb).ToList();
+                    claims.Add(new Claim(ClaimTypes.Role, role));
+                }
+            }
 
-            // await Task.Delay(100);
-            JwtSecurityToken token = new JwtSecurityToken(
-                issuer: configuration["Jwt:Issuer"],
-                audience: configuration["Jwt:Audience"],
-                claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: new SigningCredentials(
-                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"]!)),
-                    SecurityAlgorithms.HmacSha256)
-            );
+            if (userClaims != null)
+            {
+                claims.AddRange(userClaims);
+            }
 
 
-           return new JwtSecurityTokenHandler().WriteToken(token);
+            claims.Add(new Claim(ClaimTypes.Name, user.UserName!));
+            claims.Add(new Claim(ClaimTypes.Email, user.Email!));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Email!));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
+
+            var jwtSecurityToken = new JwtSecurityToken
+                (configuration["Jwt:Issuer"], configuration["Jwt:Audience"],
+                claims, DateTime.Now, DateTime.Now.AddMinutes(10),
+                credentials);
+            return new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
 
         }
-
     }
 }
