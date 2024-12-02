@@ -81,9 +81,13 @@ namespace DemoSecurity.API.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         private async Task<string?> GenerateJwt(IdentityUser user)
         {
+
+
             var symmetricSecurityKey = new SymmetricSecurityKey
                             (Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"] ?? ""));
+
             var userClaims = await userManager.GetClaimsAsync(user);
+
             var roles = await userManager.GetRolesAsync(user);
 
             var credentials = new SigningCredentials(
@@ -117,5 +121,6 @@ namespace DemoSecurity.API.Controllers
             return new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
 
         }
+
     }
 }

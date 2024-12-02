@@ -53,9 +53,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.LoginPath = "/api/accounts/login";
     });
 
-
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
