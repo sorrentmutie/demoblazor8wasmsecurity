@@ -59,11 +59,13 @@ public class AppAuthenticationStateProvider: AuthenticationStateProvider
         NotifyAuthenticationStateChanged(authState);
     }
 
-    public void SignOut()
+    public async Task SignOut()
     {
        var nobody = new ClaimsPrincipal(new ClaimsIdentity());  
        Task<AuthenticationState> authState = Task.FromResult(new AuthenticationState(nobody));
-       NotifyAuthenticationStateChanged(authState);
+
+        await localStorageService.SetItemAsStringAsync("bearerToken", "");
+        NotifyAuthenticationStateChanged(authState);
     }
 
 
