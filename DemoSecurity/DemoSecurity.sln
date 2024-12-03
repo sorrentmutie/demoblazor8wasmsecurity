@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoSecurity.API", "DemoSec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoSecurity.Models", "DemoSecurity.Models\DemoSecurity.Models.csproj", "{A3CB0D56-DD95-47FD-A439-CC47B5B8F69A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoClientWASM", "DemoClientWASM\DemoClientWASM.csproj", "{0816A346-3C81-4322-B352-D0CFECA62C59}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A3CB0D56-DD95-47FD-A439-CC47B5B8F69A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3CB0D56-DD95-47FD-A439-CC47B5B8F69A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3CB0D56-DD95-47FD-A439-CC47B5B8F69A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0816A346-3C81-4322-B352-D0CFECA62C59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0816A346-3C81-4322-B352-D0CFECA62C59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0816A346-3C81-4322-B352-D0CFECA62C59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0816A346-3C81-4322-B352-D0CFECA62C59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
