@@ -1,0 +1,58 @@
+﻿@page "/signin"
+@using Blazored.LocalStorage
+@using DemoClientWASM.Services
+@using DemoSecurity.Models
+@inject HttpClient http
+@inject ILocalStorageService localStorage
+@inject AuthenticationStateProvider authenticationStateProvider
+
+
+@if (signedInWithSuccess == false)
+{
+    <EditForm Model="registerRequest" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+
+        <div class="form-group">
+            <label for="Email">Email</label>
+            <InputText id="Email" class="form-control" @bind-Value="registerRequest.Email" />
+            <ValidationMessage For="@(() => registerRequest.Email)"/>
+        </div>
+
+
+        <div class="form-group">
+            <label for="Password">Password</label>
+            <InputText type="password" id="Password" class="form-control" @bind-Value="registerRequest.Password" />
+            <ValidationMessage For="@(() => registerRequest.Password)" />
+        </div>
+
+        <button type="submit"  class="btn btn-primary">OK</button>
+
+
+    </EditForm>
+}
+else
+{
+    <p>Sign in with success</p>
+    <a href="/counter">Counter</a>
+}
+
+@code {
+    private RegisterRequest registerRequest = new();
+    private bool signedInWithSuccess = false;
+
+    private async Task HandleValidSubmit()
+    {
+        var response =  await http.PostAsJsonAsync("https://localhost:7185/api/accounts/login", registerRequest);
+        if(response.IsSuccessStatusCode) {
+            signedInWithSuccess = true;
+            var token = await response.Content.ReadAsStringAsync();
+            await localStorage.SetItemAsync("bearerToken", token);
+
+            await ((AppAuthenticationStateProvider)authenticationStateProvider).SignIn();
+            http.DefaultRequestHeaders.Authorization = 
+                 new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token); 
+        }
+
+    }
+
+}
