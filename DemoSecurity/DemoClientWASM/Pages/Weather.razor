@@ -1,4 +1,5 @@
 ﻿@page "/weather"
+@using Microsoft.AspNetCore.Authorization
 @inject HttpClient Http
 
 <PageTitle>Weather</PageTitle>
@@ -41,7 +42,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        var url = "https://localhost:7185/weatherforecast";
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>(url);
     }
 
     public class WeatherForecast

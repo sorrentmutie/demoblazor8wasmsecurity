@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoSecurity.API.Controllers
 {
+    [Authorize(Policy = "RequireAdminRoleAndInternalCode")]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase

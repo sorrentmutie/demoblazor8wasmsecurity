@@ -103,6 +103,9 @@ namespace DemoSecurity.API.Controllers
                 }
             }
 
+            claims.Add(new Claim("MyClaim", "Valore del mio claim"));
+
+
             if (userClaims != null)
             {
                 claims.AddRange(userClaims);

@@ -30,8 +30,6 @@ builder.Services.AddIdentityCore<IdentityUser>(o => o.SignIn.RequireConfirmedAcc
    .AddSignInManager<SignInManager<IdentityUser>>()
    .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddAuthentication();
-
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -52,6 +50,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
         options.LoginPath = "/api/accounts/login";
     });
+
+builder.Services.AddAuthorization(o =>
+{
+    o.AddPolicy("RequireAdminRoleAndInternalCode", p
+        =>
+    {
+        p.RequireRole("User");
+        p.RequireClaim("CodiceInterno");
+    });
+});
+
 
 var app = builder.Build();
 
