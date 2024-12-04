@@ -31,6 +31,20 @@
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
+    <script>
+
+        function updateConnectionStatus() {
+            if (navigator.onLine) {
+                console.log('You are online');
+                return true;
+            } else {
+                console.log('You are offine');
+                return  false
+            }
+        }
+
+
+    </script>
 </body>
 
 </html>

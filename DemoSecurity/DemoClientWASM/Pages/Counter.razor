@@ -1,7 +1,21 @@
 ﻿@page "/counter"
-
+@using DemoClientWASM.Services
+@inject AuthenticationStateProvider authorizationStateProvider
+@inject IJSRuntime JSRuntime
 
 <PageTitle>Counter</PageTitle>
+
+<AuthorizeView>
+    <Authorized>
+        <p>Hello, @context.User.Identity.Name!</p>
+    </Authorized>
+    <NotAuthorized>
+        <p>You are not logged in.</p>
+    </NotAuthorized>
+
+
+</AuthorizeView>
+
 
 <h1>Counter</h1>
 
@@ -9,19 +23,36 @@
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
+<button class="btn btn-primary" @onclick="Change">Click me</button>
 
+<button @onclick="IsOnline">Sono online? @online</button>
 
+@mis
 
 
 @code {
     private int currentCount = 0;
+    private bool online = true;
+    private int mis = 0;
 
     protected override async Task OnInitializedAsync()
     {
-        
+        online = await JSRuntime.InvokeAsync<bool>("updateConnectionStatus");
     }
 
 
+    private async Task IsOnline()
+    {
+        online = await JSRuntime.InvokeAsync<bool>("updateConnectionStatus");
+    }
+
+
+    private async Task Change()
+    {
+        mis = 0;
+        var x = await ((AppAuthenticationStateProvider)authorizationStateProvider).GetAuthenticationStateAsync();
+        mis = x.User.Claims.Count();
+    }   
   
 
     private void IncrementCount()

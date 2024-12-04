@@ -8,6 +8,8 @@ namespace DemoClientWASM.Services;
 
 
 
+
+
 public class AppAuthenticationStateProvider: AuthenticationStateProvider
 {
     private readonly ILocalStorageService localStorageService;
